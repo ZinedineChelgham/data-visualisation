@@ -1,31 +1,27 @@
-<html lang="en">
-
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="index.js" defer></script>
-    <script src="//d3js.org/d3.v4.min.js"></script>
+    <title>Visualization Page</title>
     <link rel="stylesheet" href="index.css">
 </head>
-
 <body>
-    <div id="filter-container">
-        <div id="filter">
-            <label for="minYearInput">Min Year:</label>
-            <input type="number" id="minYearInput" placeholder="Enter the minimum year">
-            <label for="maxYearInput">Max Year:</label>
-            <input type="number" id="maxYearInput" placeholder="Enter the maximum year">
-            <button id="filterButton">Apply Filter</button>
-        </div>
-    </div>
-    <div id="dataviz"></div> 
-    <div id="animation-button">
-        <button id="playAnimationAscButton" title="Play Animation">Play Animation in Ascending order</button>
-        <button id="playAnimationDescButton" title="Play Animation">Play Animation in Descending order</button>
-    </div>
+    <h1 class="centered-title">Data Visualization Project</h1>
 
+    <div class="quadrant" onclick="window.location.href='/visualisation/circle_packing'">
+        <h2>Circle Packing</h2>
+        <img src="https://d3-graph-gallery.com/img/section/CircularPacking150.png" alt="Circle Packing Visualization">
+    </div>
+    <div class="quadrant" onclick="window.location.href='/visualisation/map'">
+        <h2>Map</h2>
+        <img src="https://d3-graph-gallery.com/img/section/Choropleth150.png" alt="Map Visualization">
+    </div>
+    <div class="quadrant" onclick="window.location.href='/visualisations/treemap'">
+        <h2>Treemap (Zinedine)</h2>
+        <img src="https://d3-graph-gallery.com/img/section/Tree150.png" alt="Treemap Visualization">
+    </div>
+    <div class="quadrant" onclick="window.location.href='/visualisation/circular_barplot'">
+        <h2>Circular Barplot</h2>
+        <img src="https://d3-graph-gallery.com/img/section/CircularBarplot150.png" alt="Circular Barplot Visualization">
+    </div>
 </body>
-
 </html>

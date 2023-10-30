@@ -1,5 +1,5 @@
 
-const DATASET_PATH = "data/wasabi_data_preprocessed.json";
+const DATASET_PATH = "/data/wasabi_data_preprocessed.json";
 
 const animationSpeed = 120; // Milliseconds between each step
 const stepSize = 1; // Increment to increase minYear

@@ -1,170 +1,51 @@
-.tooltip {
-  position: absolute;
-  text-align: center;
-  background-color: rgb(241, 244, 246);
-  width: fit-content;
-  height: 20px;
-  padding: 10px;
-  font: 15px sans-serif;
-  border-radius: 8px;
-  pointer-events: none;
-  font-weight: bold;
-}
-
-.underlined-text {
-  text-decoration: underline;
-}
-
-tspan {
-  font-size: 17px;
-}
-
-text {
-  pointer-events: none;
-}
-
-.grandparent text {
-  font-weight: bold;
-}
-
-rect {
-  stroke: #fff;
-  stroke-width: 1px;
-}
-
-rect.parent,
-.grandparent rect {
-  stroke-width: 3px;
-  fill: orange;
-}
-
-.grandparent text {
-  font-weight: bold;
-}
-
-.grandparent:hover rect {
-  fill: #ee9700;
-}
-
-.children rect.parent,
-.grandparent rect {
-  cursor: pointer;
-}
-
-.children rect.child {
-  opacity: 0.12;
-}
-
-
-.children:hover rect.child {
-  opacity: 0.7;
-  stroke-width: 3px;
-}
-
-.children:hover rect.parent {
-  opacity: 0.99;
-}
-
-.legend {
-  margin-bottom: 8px !important;
-}
-
-.legend rect {
-  stroke-width: 0px;
-}
-
-.legend text {
-  text-anchor: middle;
-  pointer-events: auto;
-  font-size: 13px;
-  font-family: sans-serif;
-  fill: black;
-}
-
-.form-group {
-  text-align: left;
-}
-
-.textdiv {
-  font-family: "Open Sans", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  padding: 7px;
-  cursor: pointer;
-  overflow: none;
-}
-
-.textdiv .title {
-  font-size: 102%;
-  font-weight: bold;
-  margin-top: 8px;
-  font-size: 11px !important;
-}
-
-.textdiv p {
-  line-height: 13px;
-  margin: 0 0 4px !important;
-  padding: 0px;
-  font-size: 10px !important;
-}
-
-/* Style form labels and inputs */
-label {
-  display: block;
-  font-weight: bold;
-}
-
-input[type="number"] {
-  padding: 5px;
-  width: 200px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
- 
-}
-
-/* Style buttons */
-button {
-  padding: 5.5px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Center the content on the page */
 body {
-  height: 100vh;
-  width: 100vw;
-  background: radial-gradient(circle, rgba(162,198,255,1) 0%, rgba(255,255,255,1) 100%);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+    align-content: center;
+    /* Center content vertically in the grid */
+    text-align: center;
+    /* Center text horizontally */
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
 }
 
-#filter{
-  width: 45%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.centered-title {
+    grid-column: span 2;
+    /* Span both columns */
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-#filter-container{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-#animation-button{
-  width: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 10px;
+.quadrant {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid #080707;
+    border-radius: 5px;
+    padding: 20px;
 
 }
 
+.quadrant:hover {
+    opacity: 0.5;
+    transform: scale(1.01);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: 0.2s ease-in-out; /* Smooth background transition */
 
+}
+
+.quadrant img {
+    width: 150px;
+    height: 150px;
+    margin-top: 10px;
+}
