@@ -1,12 +1,116 @@
 .tooltip {
-    position: absolute;
-    text-align: center;
-    width: 100px;
-    height: 10px;
-    padding: 8px;
-    font: 10px sans-serif;
-    background: #ffff99;
-    border: solid 1px #aaa;
-    border-radius: 8px;
-    pointer-events: none;
+  position: absolute;
+  text-align: center;
+  background-color: rgb(241, 244, 246);
+  width: fit-content;
+  height: 20px;
+  padding: 10px;
+  font: 15px sans-serif;
+  border-radius: 8px;
+  pointer-events: none;
+  font-weight: bold;
+}
+
+#treemap-container {
+  width: 100%;
+  height: 100%;
+  /* You can use other CSS properties to control the layout as needed */
+}
+
+
+.underlined-text {
+  text-decoration: underline;
+}
+
+#chart {
+  max-width: 100%;
+  overflow: auto;
+}
+
+text {
+  pointer-events: none;
+}
+
+.grandparent text {
+  font-weight: bold;
+}
+
+rect {
+  stroke: #fff;
+  stroke-width: 1px;
+}
+
+rect.parent,
+.grandparent rect {
+  stroke-width: 3px;
+  fill: orange;
+}
+
+.grandparent text {
+  font-weight: bold;
+}
+
+.grandparent:hover rect {
+  fill: #ee9700;
+}
+
+.children rect.parent,
+.grandparent rect {
+  cursor: pointer;
+}
+
+.children rect.child {
+  opacity: 0;
+}
+
+
+.children:hover rect.child {
+  opacity: 0.9;
+  stroke-width: 1px;
+}
+
+.children:hover rect.parent {
+  opacity: 0;
+}
+
+.legend {
+  margin-bottom: 8px !important;
+}
+
+.legend rect {
+  stroke-width: 0px;
+}
+
+.legend text {
+  text-anchor: middle;
+  pointer-events: auto;
+  font-size: 13px;
+  font-family: sans-serif;
+  fill: black;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.textdiv {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  padding: 7px;
+  cursor: pointer;
+  overflow: none;
+}
+
+.textdiv .title {
+  font-size: 102%;
+  font-weight: bold;
+  margin-top: 8px;
+  font-size: 11px !important;
+}
+
+.textdiv p {
+  line-height: 13px;
+  margin: 0 0 4px !important;
+  padding: 0px;
+  font-size: 10px !important;
 }

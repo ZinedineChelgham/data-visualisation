@@ -1,15 +1,24 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="index.js" defer></script>
+    <script src="//d3js.org/d3.v4.min.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
-    <div id="dataviz"/>
-    
+    <label for="minYearInput">Min Year:</label>
+    <input type="number" id="minYearInput" placeholder="Enter the minimum year">
+    <label for="maxYearInput">Max Year:</label>
+    <input type="number" id="maxYearInput" placeholder="Enter the maximum year">
+    <button id="filterButton">Apply Filter</button>
+
+    <div id="dataviz" />
+
 </body>
+
 </html>
