@@ -17,6 +17,7 @@
 
 tspan {
   font-size: 17px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 text {
@@ -40,6 +41,7 @@ rect.parent,
 
 .grandparent text {
   font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .grandparent:hover rect {
@@ -52,7 +54,7 @@ rect.parent,
 }
 
 .children rect.child {
-  opacity: 0.099;
+  opacity: 0.060;
 }
 
 
@@ -111,6 +113,7 @@ rect.parent,
 label {
   display: block;
   font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 input[type="number"] {
