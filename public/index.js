@@ -1,10 +1,12 @@
 
-
 const DATASET_PATH = "data/wasabi_data_preprocessed.json";
+
+const animationSpeed = 120; // Milliseconds between each step
+const stepSize = 1; // Increment to increase minYear
+
 var minYear, maxYear;
 var width = 960,
     height = 500;
-
 // Add tooltip div
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
@@ -32,61 +34,6 @@ var format = d3.format(",d");
 var treemap;
 var svg, grandparent;
 
-function findEarliestAlbumPublicationDate(artists) {
-    let earliestDate = Infinity;
-    artists.forEach(artist => {
-        artist.albums.forEach(album => {
-            const publicationDate = parseInt(album.publicationDateAlbum, 10);
-            if (!isNaN(publicationDate) && publicationDate < earliestDate && publicationDate !== 0) {
-                earliestDate = publicationDate;
-            }
-        });
-    });
-
-    return earliestDate;
-}
-
-function findLatestAlbumPublicationDate(artists) {
-    let latestDate = 0;
-    artists.forEach(artist => {
-        artist.albums.forEach(album => {
-            const publicationDate = parseInt(album.publicationDateAlbum, 10);
-            if (!isNaN(publicationDate) && publicationDate > latestDate && publicationDate !== 9999) {
-                latestDate = publicationDate;
-            }
-        });
-    });
-
-    return latestDate;
-}
-
-function filterData(data) {
-    const filteredData = data.filter(function (d) {
-        // Extract the publication date from the artist's data
-        const publicationDate = parseInt(findEarliestAlbumPublicationDate([d]));
-        // Check if the publication date falls within the desired range
-        return publicationDate >= minYear && publicationDate <= maxYear;
-    });
-
-    return filteredData;
-}
-
-function initInput(data) {
-    const earliestPublicationDate = findEarliestAlbumPublicationDate(data);
-    const latestPublicationDate = findLatestAlbumPublicationDate(data);
-
-    const minYearInput = document.getElementById("minYearInput");
-    minYearInput.min = earliestPublicationDate;
-    minYearInput.value = earliestPublicationDate;
-
-    const maxYearInput = document.getElementById("maxYearInput");
-    maxYearInput.max = latestPublicationDate;
-    maxYearInput.value = latestPublicationDate;
-
-    minYear = earliestPublicationDate;
-    maxYear = latestPublicationDate;
-}
-
 
 d3.json(DATASET_PATH, function (error, data) {
     initInput(data);
@@ -97,40 +44,67 @@ d3.json(DATASET_PATH, function (error, data) {
         minYear = parseInt(minYearInput.value, 10);
         maxYear = parseInt(maxYearInput.value, 10);
 
-        // if (isNaN(minYear) || isNaN(maxYear)) {
-        //     alert("Please enter a valid year.");
-        //     return;
-        // }
+        if (isNaN(minYear) || isNaN(maxYear)) {
+            alert("Please enter a valid year.");
+            return;
+        }
 
         if (minYear > maxYear) {
             alert("The minimum year must be lower than the maximum year.");
             return;
         }
         console.log("click", minYear, maxYear);
-        
-        //d3.select("#dataviz svg").remove();
-       
-        // Update the visualization
-        const filteredData = filterData(data);
-        updateDrillDown(getHierarchicalData(filteredData));
+
+        updateDrillDown(getHierarchicalData(filterData(data)));
     });
 
-   // const filteredData = filterData(data);
+    document.getElementById("playAnimationAscButton").addEventListener("click", () => {
+        animateChart();
+    });
 
-    //d3.select("#dataviz svg").remove();
+    document.getElementById("playAnimationDescButton").addEventListener("click", () => {
+        animateChartDesc()
+    });
 
-    // Update the visualization
+    function animateChart() {
+        if (minYear < maxYear) {
+            // Increase minYear for the next step
+            minYear += stepSize;
+
+            //update the input
+            document.getElementById("minYearInput").value = minYear;
+
+            // Update the chart with the current minYear
+            updateDrillDown(getHierarchicalData(filterData(data)));
+
+            // Set a timeout to continue the animation
+            setTimeout(animateChart, animationSpeed);
+        }
+    }
+
+    function animateChartDesc() {
+        if (minYear < maxYear) {
+            // Update the chart with the current minYear
+            updateDrillDown(getHierarchicalData(filterData(data)));
+            // Increase minYear for the next step
+            maxYear -= stepSize;
+
+            //update the input
+            document.getElementById("maxYearInput").value = maxYear;
+
+            // Update the chart with the current minYear
+            updateDrillDown(getHierarchicalData(filterData(data)));
+            // Set a timeout to continue the animation
+            setTimeout(animateChartDesc, animationSpeed);
+        }
+    }
+
+
     updateDrillDown(getHierarchicalData(filterData(data)));
-
-    // const processData = getHierarchicalData(filterData(data));
-
-    // console.log(processData);
-
-  //  updateDrillDown(processData);
 
     function updateDrillDown(data) {
         if (svg) {
-            svg.selectAll("*").remove();
+            svg.selectAll(".depth").remove();
         } else {
             svg = d3.select("#dataviz").append("svg")
                 .attr("width", width - margin.left - margin.right)
@@ -149,12 +123,10 @@ d3.json(DATASET_PATH, function (error, data) {
                 .attr("width", width)
                 .attr("height", margin.top);
 
-
             grandparent.append("text")
                 .attr("x", 6)
                 .attr("y", 6 - margin.top)
                 .attr("dy", ".75em")
-
 
             treemap = d3.treemap()
                 .tile(d3.treemapResquarify.ratio(height / width * 0.5 * (1 + Math.sqrt(5))))
@@ -243,7 +215,7 @@ d3.json(DATASET_PATH, function (error, data) {
                 const [mouseX, mouseY] = d3.mouse(svg.node());
                 //console.log(svg.node());
                 tooltip
-                    .html("Dive into <span class='underlined-text'>" + d.children[i].data.name.toUpperCase() + "</span> data")
+                    .html("Dive into <span class='underlined-text'>" + d.children[i].data.name.toUpperCase() + "</span> (" + d.children[i].value + ") data")
                     .style("left", mouseX + "px")
                     .style("top", mouseY + "px");
             })
@@ -275,14 +247,14 @@ d3.json(DATASET_PATH, function (error, data) {
 
         var t = g.append("text")
             .attr("class", "ptext")
-            .attr("dy", ".75em")
+            .attr("dy", "1em")
 
 
         t.append("tspan")
             .text(function (d) { return d.data.name; });
 
         t.append("tspan")
-            .attr("dy", "1.0em")
+            .attr("dy", "1.15em")
             .text(function (d) { return formatNumber(d.value); });
 
         t.call(text);
@@ -377,10 +349,67 @@ d3.json(DATASET_PATH, function (error, data) {
         // console.log(d);
         // for (children of d.children) { val += children.data.value }
         // console.log(val);
-        return d.parent ? name(d.parent) + " > " + d.data.name + " (" + formatNumber(d.value) + ")" : d?.data?.name + " (" + formatNumber(d.value) + ")";
+        return d.parent ? name(d.parent) + " > " + d.data.name + " (" + formatNumber(d.value) + ")"
+            : d?.data?.name + " (" + formatNumber(d.value) + ")";
     }
 
 });
+
+function findEarliestAlbumPublicationDate(artists) {
+    let earliestDate = Infinity;
+    artists.forEach(artist => {
+        artist.albums.forEach(album => {
+            const publicationDate = parseInt(album.publicationDateAlbum, 10);
+            if (!isNaN(publicationDate) && publicationDate < earliestDate && publicationDate !== 0) {
+                earliestDate = publicationDate;
+            }
+        });
+    });
+
+    return earliestDate;
+}
+
+function findLatestAlbumPublicationDate(artists) {
+    let latestDate = 0;
+    artists.forEach(artist => {
+        artist.albums.forEach(album => {
+            const publicationDate = parseInt(album.publicationDateAlbum, 10);
+            if (!isNaN(publicationDate) && publicationDate > latestDate && publicationDate !== 9999) {
+                latestDate = publicationDate;
+            }
+        });
+    });
+
+    return latestDate;
+}
+
+function filterData(data) {
+    const filteredData = data.filter(function (d) {
+        // Extract the publication date from the artist's data
+        const publicationDate = parseInt(findEarliestAlbumPublicationDate([d]));
+        // Check if the publication date falls within the desired range
+        return publicationDate >= minYear && publicationDate <= maxYear;
+    });
+
+    return filteredData;
+}
+
+function initInput(data) {
+    const earliestPublicationDate = findEarliestAlbumPublicationDate(data);
+    const latestPublicationDate = findLatestAlbumPublicationDate(data);
+
+    const minYearInput = document.getElementById("minYearInput");
+    minYearInput.min = earliestPublicationDate;
+    minYearInput.value = earliestPublicationDate;
+
+    const maxYearInput = document.getElementById("maxYearInput");
+    maxYearInput.max = latestPublicationDate;
+    maxYearInput.value = latestPublicationDate;
+
+    minYear = earliestPublicationDate;
+    maxYear = latestPublicationDate;
+}
+
 
 function getHierarchicalData(data) {
 
@@ -433,14 +462,14 @@ function getHierarchicalData(data) {
 
     console.log("genreData", genreData);
 
-    const test = nestedData2.find(function (g) { return g.key == genreData[0].country; }).values.find(function (h) { return h.key == "Rock"; }).values.map(function (i) {
-        return {
-            name: i.artist_name,
-            value: i.songs.length
-        };
-    })
+    // const test = nestedData2.find(function (g) { return g.key == genreData[0].country; }).values.find(function (h) { return h.key == "Rock"; }).values.map(function (i) {
+    //     return {
+    //         name: i.artist_name,
+    //         value: i.songs.length
+    //     };
+    // })
 
-    console.log("test", test);
+    // console.log("test", test);
 
     var hierarchicalData = {
         name: "Data to explore", // Root node
