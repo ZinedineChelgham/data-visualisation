@@ -211,19 +211,30 @@ d3.json(DATASET_PATH, function (error, data) {
                     .duration(300)
                     .style("opacity", 1);
             })
-            .on("mousemove", (_, i) => {
+            .on("mousemove", (e, i) => {
                 const [mouseX, mouseY] = d3.mouse(svg.node());
                 //console.log(svg.node());
-                tooltip
-                    .html("Dive into <span class='underlined-text'>" + d.children[i].data.name.toUpperCase() + "</span> (" + d.children[i].value + ") data")
-                    .style("left", mouseX + "px")
-                    .style("top", mouseY + "px");
+                console.log(e);
+                tooltip.html(function () {
+                    switch (e.height) {
+                        case 3: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + "( " + d.children[i].value + ") music style distribution"
+                        case 2: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + "( " + d.children[i].value + ") artists distribution"
+                        case 1: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + "( " + d.children[i].value + ") songs"
+                        default: return "";
+                    }
+                }).style("left", mouseX + "px")
+                    .style("top", mouseY + "px")
+                    .style("display", function () {
+                        return tooltip.html() === "" ? "none" : "block";
+                    });
             })
             .on("mouseout", () => {
                 tooltip.transition()
                     .duration(300)
                     .style("opacity", 1e-6);
             })
+
+
 
         g.filter(function (d) { return d._children; })
             .classed("children", true)
@@ -255,7 +266,13 @@ d3.json(DATASET_PATH, function (error, data) {
 
         t.append("tspan")
             .attr("dy", "1.15em")
-            .text(function (d) { return formatNumber(d.value); });
+            .text(function (d) {
+                if (d.value === 1) {
+                    return ""; // Return an empty string when d.value is 1
+                } else {
+                    return formatNumber(d.value);
+                }
+            });
 
         t.call(text);
 
