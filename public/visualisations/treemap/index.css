@@ -11,6 +11,14 @@
   font-weight: bold;
 }
 
+h1{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
 .underlined-text {
   text-decoration: underline;
 }
@@ -59,7 +67,7 @@ rect.parent,
 
 
 .children:hover rect.child {
-  opacity: 0.7;
+  opacity: 0.2;
   stroke-width: 3px;
 }
 

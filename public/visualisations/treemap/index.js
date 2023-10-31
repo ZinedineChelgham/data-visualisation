@@ -217,10 +217,10 @@ d3.json(DATASET_PATH, function (error, data) {
                 console.log(e);
                 tooltip.html(function () {
                     switch (e.height) {
-                        case 3: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + "( " + d.children[i].value + ") music style distribution"
-                        case 2: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + "( " + d.children[i].value + ") artists distribution"
-                        case 1: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + "( " + d.children[i].value + ") songs"
-                        default: return "";
+                        case 3: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " (" + d.children[i].value + " artists) music style distribution"
+                        case 2: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " (" + d.children[i].value + " artists) distribution"
+                        case 1: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " (" + d.children[i].value + " songs)"
+                        default: return "Album: <span class=underlined-text>" + d.children[i].data.album.toUpperCase() + "</span>" 
                     }
                 }).style("left", mouseX + "px")
                     .style("top", mouseY + "px")
@@ -270,7 +270,9 @@ d3.json(DATASET_PATH, function (error, data) {
                 if (d.value === 1) {
                     return ""; // Return an empty string when d.value is 1
                 } else {
-                    return formatNumber(d.value);
+                    let str = formatNumber(d.value)
+                    d.height >= 2 ? str += " artists" : str += " songs"
+                    return str;
                 }
             });
 
@@ -506,6 +508,7 @@ function getHierarchicalData(data) {
                                     return {
                                         name: j.title,
                                         value: 1,
+                                        album: j.Album,
                                         // children: (maxDate - minDate) > 30 ? undefined : i.albums.map(function (j) {
                                         //     return {
                                         //         name: j.albums_title,
@@ -533,3 +536,20 @@ function getHierarchicalData(data) {
     return hierarchicalData;
 }
 
+function encodeStr(str) {
+    var numberValue = 0;
+    for (var i = 0; i < str.length; i++) {
+        numberValue = numberValue * 1000 + str.charCodeAt(i);
+    }
+    return numberValue;
+}
+
+function decodeStr(numberValue) {
+    var originalString = "";
+    while (numberValue > 0) {
+        var charCode = numberValue % 1000;
+        resultString = String.fromCharCode(charCode) + resultString;
+        numberValue = Math.floor(numberValue / 1000);
+    }
+    return originalString;
+}
