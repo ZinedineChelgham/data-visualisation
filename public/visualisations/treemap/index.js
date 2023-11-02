@@ -407,7 +407,11 @@ function filterData(data) {
         // Extract the publication date from the artist's data
         const publicationDate = parseInt(findEarliestAlbumPublicationDate([d]));
         // Check if the publication date falls within the desired range
-        return publicationDate >= minYear && publicationDate <= maxYear;
+        const res  = publicationDate >= minYear && publicationDate <= maxYear;
+        // if(!res) {
+        //     console.log("removed", d, publicationDate, minYear, maxYear);
+        // }
+        return res;
     });
 
     return filteredData;
