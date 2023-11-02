@@ -1,4 +1,3 @@
-
 const DATASET_PATH = "/data/wasabi_data_preprocessed.json";
 
 const animationSpeed = 120; // Milliseconds between each step
@@ -233,9 +232,9 @@ d3.json(DATASET_PATH, function (error, data) {
                 //console.log(e);
                 tooltip.html(function () {
                     switch (e.height) {
-                        case 3: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " (" + d.children[i].value + " artists) music style distribution"
-                        case 2: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " (" + d.children[i].value + " artists) distribution"
-                        case 1: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " (" + d.children[i].value + " songs)"
+                        case 3: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " music style distribution"
+                        case 2: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " songs distribution"
+                        case 1: return "Dive into the artist <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span> " + d.children[i].value + " songs"
                         default: return "Album: <span class=underlined-text>" + d.children[i].data.album.toUpperCase() + "</span>"
                     }
                 }).style("left", mouseX + "px")
@@ -287,7 +286,7 @@ d3.json(DATASET_PATH, function (error, data) {
                     return ""; // Return an empty string when d.value is 1
                 } else {
                     let str = formatNumber(d.value)
-                    d.height >= 2 ? str += " artists" : str += " songs"
+                    d.height >= 2 ? str += "" : str += " songs"
                     return str;
                 }
             });
