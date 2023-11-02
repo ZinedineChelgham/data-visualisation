@@ -192,7 +192,23 @@ d3.json(DATASET_PATH, function (error, data) {
     }
 
     function display(d) {
-        //console.log('display called ' + d)
+        console.log(d);
+        if (d.id !== "Data to explore") {
+            const buttons = document.querySelectorAll("#animation-button button");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                buttons[i].style.opacity = 0.5;
+                buttons[i].style.cursor = "not-allowed";
+            }
+        } else {
+            const buttons = document.querySelectorAll("#animation-button button");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = false;
+                buttons[i].style.opacity = 1;
+                buttons[i].style.cursor = "pointer";
+            }
+        }
+
         grandparent
             .datum(d.parent)
             .on("click", transition)
@@ -214,13 +230,13 @@ d3.json(DATASET_PATH, function (error, data) {
             .on("mousemove", (e, i) => {
                 const [mouseX, mouseY] = d3.mouse(svg.node());
                 //console.log(svg.node());
-                console.log(e);
+                //console.log(e);
                 tooltip.html(function () {
                     switch (e.height) {
                         case 3: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " (" + d.children[i].value + " artists) music style distribution"
                         case 2: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " (" + d.children[i].value + " artists) distribution"
                         case 1: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " (" + d.children[i].value + " songs)"
-                        default: return "Album: <span class=underlined-text>" + d.children[i].data.album.toUpperCase() + "</span>" 
+                        default: return "Album: <span class=underlined-text>" + d.children[i].data.album.toUpperCase() + "</span>"
                     }
                 }).style("left", mouseX + "px")
                     .style("top", mouseY + "px")
@@ -407,7 +423,7 @@ function filterData(data) {
         // Extract the publication date from the artist's data
         const publicationDate = parseInt(findEarliestAlbumPublicationDate([d]));
         // Check if the publication date falls within the desired range
-        const res  = publicationDate >= minYear && publicationDate <= maxYear;
+        const res = publicationDate >= minYear && publicationDate <= maxYear;
         // if(!res) {
         //     console.log("removed", d, publicationDate, minYear, maxYear);
         // }
