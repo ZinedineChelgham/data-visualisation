@@ -1,0 +1,51 @@
+body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    height: 95vh;
+    margin: 0;
+    padding: 20px;
+    align-content: center;
+    /* Center content vertically in the grid */
+    text-align: center;
+    /* Center text horizontally */
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+
+.centered-title {
+    grid-column: span 2;
+    /* Span both columns */
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 1px;
+}
+
+.quadrant {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid #080707;
+    border-radius: 5px;
+    padding: 20px;
+
+}
+
+.quadrant:hover {
+    opacity: 0.5;
+    transform: scale(1.01);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: 0.2s ease-in-out; /* Smooth background transition */
+
+}
+
+.quadrant img {
+    width: 150px;
+    height: 150px;
+    margin-top: 10px;
+}
