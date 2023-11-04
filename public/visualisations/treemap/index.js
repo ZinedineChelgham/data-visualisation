@@ -57,6 +57,18 @@ d3.json(DATASET_PATH, function (error, data) {
         updateDrillDown(getHierarchicalData(filterData(data)));
     });
 
+    document.getElementById("restartButton").addEventListener("click", (e) => {
+        const earliestPublicationDate = findEarliestAlbumPublicationDate(data);
+        const latestPublicationDate = findLatestAlbumPublicationDate(data);
+        minYear = earliestPublicationDate;
+        maxYear = latestPublicationDate;
+        updateDrillDown(getHierarchicalData(filterData(data)));
+        e.target.style.display = "none";
+        document.getElementById("minYearInput").value = minYear;
+        document.getElementById("maxYearInput").value = maxYear;
+    })
+
+
     document.getElementById("playAnimationAscButton").addEventListener("click", () => {
         animateChart();
     });
@@ -78,7 +90,12 @@ d3.json(DATASET_PATH, function (error, data) {
 
             // Set a timeout to continue the animation
             setTimeout(animateChart, animationSpeed);
+        } else {
+            const button = document.querySelector("#restartButton");
+            // console.log(button);
+            button.style.display = "block";
         }
+
     }
 
     function animateChartDesc() {
@@ -95,6 +112,10 @@ d3.json(DATASET_PATH, function (error, data) {
             updateDrillDown(getHierarchicalData(filterData(data)));
             // Set a timeout to continue the animation
             setTimeout(animateChartDesc, animationSpeed);
+        } else {
+            const button = document.querySelector("#restartButton");
+            // console.log(button);
+            button.style.display = "block";
         }
     }
 
@@ -192,6 +213,7 @@ d3.json(DATASET_PATH, function (error, data) {
 
     function display(d) {
         console.log(d);
+
         if (d.id !== "Data to explore") {
             const buttons = document.querySelectorAll("#animation-button button");
             for (let i = 0; i < buttons.length; i++) {
@@ -211,8 +233,34 @@ d3.json(DATASET_PATH, function (error, data) {
         grandparent
             .datum(d.parent)
             .on("click", transition)
+            .on("mouseover", (_, i) => {
+                console.log(i);
+                tooltip.transition()
+                    .duration(300)
+                    .style("opacity", 1);
+            })
+            .on("mousemove", (e, i) => {
+                // get x and y position of the mouse not using d3
+                const mouseX = d3.event.pageX;
+                const mouseY = d3.event.pageY;
+                console.log(e, i);
+                tooltip.html(function () {
+                    return e !== undefined ? "Step back" : ""
+                }).style("left", mouseX + 20 + "px")
+                    .style("top", mouseY - 20 + "px")
+                    .style("display", function () {
+                        return tooltip.html() === "" ? "none" : "block";
+                    });
+
+            })
+            .on("mouseout", () => {
+                tooltip.transition()
+                    .duration(300)
+                    .style("opacity", 1e-6);
+            })
             .select("text")
             .text(name(d))
+
 
         var g1 = svg.insert("g", ".grandparent")
             .datum(d)
@@ -222,6 +270,7 @@ d3.json(DATASET_PATH, function (error, data) {
             .data(d._children)
             .enter().append("g")
             .on("mouseover", (_, i) => {
+                console.log(i);
                 tooltip.transition()
                     .duration(300)
                     .style("opacity", 1);
@@ -232,13 +281,13 @@ d3.json(DATASET_PATH, function (error, data) {
                 //console.log(e);
                 tooltip.html(function () {
                     switch (e.height) {
-                        case 3: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " music style distribution"
-                        case 2: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span>" + " songs distribution"
+                        case 3: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + " (" + d.children[i].value + " data)" + "</span>" + " music style distribution"
+                        case 2: return "Dive into <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + " (" + d.children[i].value + ")" + "</span>" + " artists & songs distribution"
                         case 1: return "Dive into the artist <span class=underlined-text>" + d.children[i].data.name.toUpperCase() + "</span> " + d.children[i].value + " songs"
                         default: return "Album: <span class=underlined-text>" + d.children[i].data.album.toUpperCase() + "</span>"
                     }
-                }).style("left", mouseX + "px")
-                    .style("top", mouseY + "px")
+                }).style("left", (mouseX + 20) + "px")
+                    .style("top", (mouseY + 50) + "px")
                     .style("display", function () {
                         return tooltip.html() === "" ? "none" : "block";
                     });

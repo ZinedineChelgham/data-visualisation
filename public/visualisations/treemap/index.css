@@ -173,11 +173,25 @@ body {
 }
 
 #animation-button {
-  width: 500px;
+  width: 520px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 10px;
   margin-bottom: 10px;
 
+}
+
+#restartButton {
+  display: none;
+  opacity: 0.8;
+  width: 120px;
+  background-image: linear-gradient(#1f71ff 0%, #1FA2FF 100%);
+}
+
+#footerButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 665px;
 }
