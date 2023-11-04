@@ -8,15 +8,17 @@ h1 {
   }
 /* language select dropdown */
 #language-select {
-    padding: 10px;
+    padding: 5px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: #e5dac4;
+    background-color: rgb(253, 249, 244);
     color: #C850C0;
     cursor: pointer;
     position: relative;
     top: 20px; 
+    font-weight: bold;
+
 }
 
 #language-select::after {
@@ -27,11 +29,6 @@ h1 {
     right: 10px;
     pointer-events: none;
 }
-
-
-
-
-
 
 
 
@@ -62,6 +59,7 @@ h1 {
 
 #tooltip-song-list {
     list-style-type: disc;
+    position: relative;
     padding: 0;
     margin: 0;
 }
@@ -69,6 +67,17 @@ h1 {
 #tooltip-song-list li {
     font-size: 14px;
     margin: 5px 0;
+}
+
+
+/* close icon buttom */
+.close-icon {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #eba016; 
 }
 
 /* Scrollable list songs */
@@ -107,10 +116,10 @@ h1 {
 /* Legend */
 .legend {
     position: absolute;
-    top: 150px;
-    right: 20px;
+    top: 600px;
+    left: 10px; /* Adjust the left position as needed */
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
 }
 .legend-title {
@@ -119,21 +128,19 @@ h1 {
 
 
 
-
-
-
-
-
-
-
 /* Grey box */
 #color_box_wrapper {
-    display: table;
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
     position: absolute;
-    top: 120px;
-    right: 10px;
+    top: 560px;
+    left: 10px; 
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 2px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 #color_box, #color_text {
     display: inline-block;
     margin: 0;
@@ -142,20 +149,23 @@ h1 {
 #color_text {
     display: table-cell;
     vertical-align: middle;
+    font-size: 14px; 
+    color: #000000;
+    font-weight: bold;
+
 }
 
 .grey {
-    height: 20px;
-    width: 20px;
+    height: 10px;
+    width: 10px; 
     background-color: #696969;
+    border-radius: 50%; 
 }
 
 
-/* Add a CSS class for responsive SVG */
+/* Responsive SVG */
 .responsive-svg {
-    width: auto;
-    height: auto;
+    width: 100%; 
+    height: 100vh;
+    pointer-events: zoom; /* Disable mouse interactions on the map */
 }
-
-
-

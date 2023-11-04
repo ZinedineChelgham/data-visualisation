@@ -8,6 +8,7 @@ const svg = svgContainer.append("svg")
     .attr("width", width)
     .attr("height", height);
 
+
 //projecting data from 3d (earth) to a 2d (map)
 const projection = d3.geoMercator()
     .scale(150)
@@ -16,6 +17,15 @@ const projection = d3.geoMercator()
 //convert geographic data into SVG path data
 const path = d3.geoPath().projection(projection);
 
+//allow zooming on the map
+function zoomed(event) {
+    svg.selectAll("path")  
+        .attr("transform", event.transform);  
+}
+const zoom = d3.zoom()
+    .scaleExtent([1, 10]) 
+    .translateExtent([[0, 0], [width, height]]) 
+    .on("zoom", zoomed);
 
 // load GeoJSON data (map)
 d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(function(world) {
@@ -55,7 +65,10 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
             const tooltip = document.getElementById("song-tooltip");                                        
             const tooltipHeader = document.getElementById("tooltip-header");
             const tooltipSongList = document.getElementById("tooltip-song-list");
-
+            const closeButton = document.getElementById("close-list-button");
+            closeButton.addEventListener("click", function() {
+                tooltip.classList.remove("active")
+            });
             //mapping data in country.json and the geo map
             svg.selectAll("path")
                 .data(world.features)
@@ -71,7 +84,7 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
                     return "gray";
                 })
                 .on("click", function(event, d) { //when clicking on a country
-                        
+  
                         if (d && d.properties && d.properties.name) {
                             const countryName = d.properties.name; //selected country
                             const country = countryData.find(c => c.Country === countryName);
@@ -106,18 +119,17 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
                             tooltip.classList.add("active");
                             }
 
-                            }
-                           
+                        }
+
                            
                     }) 
-                    .on("dblclick",function(d){
-                                //removing the scrolling list by double click
-                                tooltip.classList.remove("active")
-                    })
-               
+
+ 
                 // update the legend when selecting another language
                 addLegend(colorScale);
                 }
+                svg.call(zoom);
+
     });
 });
 
@@ -128,7 +140,7 @@ function addLegend(colorScale) {
     //create legend using ticks from the color scale
     const legendData = colorScale.ticks(15).reverse(); // Reverse the order of legendData
     const legendWidth = 200;
-    const legendHeight = 20;
+    const legendHeight = 15;
 
     // delete existing legend items
     legend.selectAll("*").remove();

@@ -8,6 +8,8 @@
     <title>World Song Distribution Map: Discover Songs by Language and Country</title>
     <link rel="stylesheet" type="text/css" href="index.css">
     <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 
 <body>
@@ -35,9 +37,13 @@
     <div id="song-tooltip" class="tooltip">
       <h3 id="tooltip-header">Songs:</h3>
       <ul id="tooltip-song-list" class="scrollable-list"></ul>
+      <div id="close-list-button" class="close-icon">
+        <i class="fas fa-times"></i>
     </div>
-    <div id="color_box_wrapper"><div id="color_box" class="grey"></div><p id="color_text">-  No data</p></div>
-    <div id="map-container" class="responsive-svg">
+    </div>
+
+    <div id="color_box_wrapper"><div id="color_box" class="grey"></div><p id="color_text">&nbsp;&nbsp;No data</p></div>
+    <div id="map-container" class="responsive-svg" >
   </div>
     <script src="index.js"></script>
 </body>
