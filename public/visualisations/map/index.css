@@ -1,3 +1,7 @@
+/*tutorials
+https://www.w3schools.com/howto/howto_css_tooltip.asp
+*/
+
 /* Title */
 h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -6,6 +10,8 @@ h1 {
     text-align: left;
     margin-bottom: 10px;
   }
+
+
 /* language select dropdown */
 #language-select {
     padding: 5px;
@@ -20,7 +26,6 @@ h1 {
     font-weight: bold;
 
 }
-
 #language-select::after {
     content: '\25BC'; 
     font-size: 16px;
@@ -34,7 +39,6 @@ h1 {
 
 
 /* Song list tooltip */
-
 .tooltip {
     position: absolute;
     background-color: #fff;
@@ -44,42 +48,50 @@ h1 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     display: none;
 }
-
+.draggable-tooltip {
+    cursor: grab;
+}
 .tooltip.active {
     display: block;
 }
 
-
 #tooltip-header {
     font-size: 20px;
-    margin: 0;
+    margin: 1;
     color:  #C850C0;
     font-weight: bold;
 }
-
 #tooltip-song-list {
     list-style-type: disc;
     position: relative;
     padding: 0;
     margin: 0;
 }
-
 #tooltip-song-list li {
     font-size: 14px;
     margin: 5px 0;
+    font-weight: bold;
+
 }
-
-
 /* close icon buttom */
 .close-icon {
     position: absolute;
     top: 5px;
     right: 15px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 13px;
     color: #eba016; 
 }
 
+/* back button */
+.back-button {
+    position: absolute;
+    top: 0px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #eba016; 
+}
 /* Scrollable list songs */
 .scrollable-list {
     max-height: 200px; 
@@ -88,28 +100,22 @@ h1 {
     padding: 0;
 
 }
-
 .scrollable-list li {
     padding: 8px;
     border-bottom: 1px solid #ddd;
+    max-height: 200px; 
+    overflow-y: auto;
 }
-
 .scrollable-list li:last-child {
     border-bottom: none;
+        max-height: 200px; 
+    overflow-y: auto;
 }
-
 /* songs name text part */
 .song-name {
     font-size: 1.0em;
     font-weight: bold;
 }
-
-.by {
-    font-size: 0.8em;
-    color:  #FFCC70;
-    margin-right: 5px;
-}
-
 
 
 
@@ -117,7 +123,7 @@ h1 {
 .legend {
     position: absolute;
     top: 600px;
-    left: 10px; /* Adjust the left position as needed */
+    left: 10px; 
     background-color: rgba(255, 255, 255, 0.8);
     padding: 8px;
     border: 1px solid #ccc;
@@ -128,7 +134,7 @@ h1 {
 
 
 
-/* Grey box */
+/* Grey box : no available data */
 #color_box_wrapper {
     display: flex;
     justify-content: flex-start; 
@@ -145,7 +151,6 @@ h1 {
     display: inline-block;
     margin: 0;
 }
-
 #color_text {
     display: table-cell;
     vertical-align: middle;
@@ -154,7 +159,6 @@ h1 {
     font-weight: bold;
 
 }
-
 .grey {
     height: 10px;
     width: 10px; 
@@ -167,5 +171,6 @@ h1 {
 .responsive-svg {
     width: 100%; 
     height: 100vh;
-    pointer-events: zoom; /* Disable mouse interactions on the map */
+    pointer-events: zoom; 
 }
+
