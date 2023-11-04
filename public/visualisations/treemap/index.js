@@ -149,12 +149,14 @@ d3.json(DATASET_PATH, function (error, data) {
                 .attr("dy", ".75em")
 
             treemap = d3.treemap()
+                //Golden ratio to optimize the aspect
                 .tile(d3.treemapResquarify.ratio(height / width * 0.5 * (1 + Math.sqrt(5))))
                 .size([width, height])
                 .round(false)
                 .paddingInner(1);
         }
 
+        //Set the root node and the hierarchy 
         var root = d3.hierarchy(data)
             .eachBefore(function (d) { d.id = (d.parent ? d.parent.id + "." : "") + d.data.name; })
             .sum((d) => {
@@ -212,7 +214,7 @@ d3.json(DATASET_PATH, function (error, data) {
     }
 
     function display(d) {
-        console.log(d);
+        //console.log(d);
 
         if (d.id !== "Data to explore") {
             const buttons = document.querySelectorAll("#animation-button button");
@@ -243,7 +245,7 @@ d3.json(DATASET_PATH, function (error, data) {
                 // get x and y position of the mouse not using d3
                 const mouseX = d3.event.pageX;
                 const mouseY = d3.event.pageY;
-                console.log(e, i);
+                // console.log(e, i);
                 tooltip.html(function () {
                     return e !== undefined ? "Step back" : ""
                 }).style("left", mouseX + 20 + "px")
@@ -270,7 +272,7 @@ d3.json(DATASET_PATH, function (error, data) {
             .data(d._children)
             .enter().append("g")
             .on("mouseover", (_, i) => {
-                console.log(i);
+                //console.log(i);
                 tooltip.transition()
                     .duration(300)
                     .style("opacity", 1);
@@ -428,10 +430,6 @@ d3.json(DATASET_PATH, function (error, data) {
     }
 
     function name(d) {
-        // let val = 0
-        // console.log(d);
-        // for (children of d.children) { val += children.data.value }
-        // console.log(val);
         return d.parent ? name(d.parent) + " > " + d.data.name + " (" + formatNumber(d.value) + ")"
             : d?.data?.name + " (" + formatNumber(d.value) + ")";
     }
@@ -500,20 +498,6 @@ function initInput(data) {
 
 function getHierarchicalData(data) {
 
-
-    // // Define the minimum and maximum date values for filtering
-    // var minDate = 1950; // Set your desired minimum date
-    // var maxDate = 1990; // Set your desired maximum date
-
-    // var filteredData = data.filter(function (d) {
-    //     // Extract the publication date from the artist's data
-    //     var publicationDate = parseInt(d.albums[0].publicationDateAlbum);
-    //     // Check if the publication date falls within the desired range
-    //     return publicationDate >= minDate && publicationDate <= maxDate;
-    // });
-
-    // console.log("filter", filteredData);
-
     var nestedData = d3.nest()
         .key(function (d) { return d.artist_country; })
         .rollup(function (values) {
@@ -549,15 +533,6 @@ function getHierarchicalData(data) {
 
     console.log("genreData", genreData);
 
-    // const test = nestedData2.find(function (g) { return g.key == genreData[0].country; }).values.find(function (h) { return h.key == "Rock"; }).values.map(function (i) {
-    //     return {
-    //         name: i.artist_name,
-    //         value: i.songs.length
-    //     };
-    // })
-
-    // console.log("test", test);
-
     var hierarchicalData = {
         name: "Data to explore", // Root node
         children: countryData.map(function (d) {
@@ -577,18 +552,6 @@ function getHierarchicalData(data) {
                                         name: j.title,
                                         value: 1,
                                         album: j.Album,
-                                        // children: (maxDate - minDate) > 30 ? undefined : i.albums.map(function (j) {
-                                        //     return {
-                                        //         name: j.albums_title,
-                                        //         value: i.songs.filter(function (k) { return k.album == j.albums_title; }).length,
-                                        //         children: i.songs.filter(function (k) { return k.album == j.albums_title; }).map(function (k) {
-                                        //             return {
-                                        //                 name: k.song_name,
-                                        //                 value: 1,
-                                        //             };
-                                        //         })
-                                        //     };
-                                        // })
                                     };
                                 })
                             };
@@ -602,22 +565,4 @@ function getHierarchicalData(data) {
     console.log("hierarchicalData", hierarchicalData);
 
     return hierarchicalData;
-}
-
-function encodeStr(str) {
-    var numberValue = 0;
-    for (var i = 0; i < str.length; i++) {
-        numberValue = numberValue * 1000 + str.charCodeAt(i);
-    }
-    return numberValue;
-}
-
-function decodeStr(numberValue) {
-    var originalString = "";
-    while (numberValue > 0) {
-        var charCode = numberValue % 1000;
-        resultString = String.fromCharCode(charCode) + resultString;
-        numberValue = Math.floor(numberValue / 1000);
-    }
-    return originalString;
 }
