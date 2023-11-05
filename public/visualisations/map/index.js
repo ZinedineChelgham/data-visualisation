@@ -8,7 +8,7 @@
 //selecting map container element
 var svgContainer = d3.select("#map-container");
 var width = 1200;
-var height = 900; 
+var height = 700; 
 // svg element
 var svg = svgContainer.append("svg")
     .attr("width", width)
