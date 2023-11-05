@@ -11,7 +11,7 @@ let critereDeSelection1 = "pays";
 let critereDeSelection2 = "genre";
 let critereDeSelection3 = "type";
 
-const DATASET_PATH = "data/wasabi_data_preprocessed.json";
+const DATASET_PATH = "/data/wasabi_data_preprocessed.json";
 const width = window.innerWidth;
 const height = window.innerHeight;
 let whereAreWe = 0;
@@ -68,7 +68,7 @@ function createCirclePacking(data, str, padding, radius) {
             );
             break;
         case "genre":
-            
+
             nestedData = d3.rollups(
                 data,
                 group => group.map(d => ({ artist_name: d.artist_name, other_property: d.other_property })),
@@ -143,7 +143,7 @@ function handleBubbleClick(d) {
 
     if (d.data.critere) {
         const critere = d.data.critere;
-        
+
         switch (whereAreWe) {
             case 1:
                 critere1 = critere;
@@ -160,7 +160,7 @@ function handleBubbleClick(d) {
                 break;
             case 3:
                 critere3=critere;
-                datasetAfter3Select = filterData(ordreInitial[2],datasetAfter2Select, critere);    
+                datasetAfter3Select = filterData(ordreInitial[2],datasetAfter2Select, critere);
                 loadLeftWindow(datasetAfter3Select)
                 filter.innerText=critere1+", "+critere2+", "+critere3;
                 break;
@@ -173,20 +173,20 @@ returnbutton.addEventListener("click",returnFunc);
 function returnFunc(){
     const filter = document.getElementById("filtre")
     whereAreWe--;
-    
+
 
     console.log(whereAreWe)
     console.log(ordreActuel)
     switch (whereAreWe) {
         case 0:
-            ordreActuel=whereAreWe; 
+            ordreActuel=whereAreWe;
             svg.selectAll("*").remove();
             createCirclePacking(dataset, ordreInitial[0], 40, 10);
             returnbutton.style.display =" none";
             filter.innerText="";
             break;
         case 1:
-            ordreActuel=whereAreWe; 
+            ordreActuel=whereAreWe;
             svg.selectAll("*").remove();
             createCirclePacking(datasetAfter1Select, ordreInitial[1], 60, 13);
             filter.innerText=critere1;
@@ -204,22 +204,22 @@ function returnFunc(){
             clearInfo();
             clearLeftWindow();
             clearRightWindow();
-            
+
             break;
         }
 }
 
 function clearLeftWindow(){
-    const ulElement = document.getElementById("leftWindow"); 
-               
+    const ulElement = document.getElementById("leftWindow");
+
             while (ulElement.firstChild) {
                 ulElement.removeChild(ulElement.firstChild);
             }
 }
 
 function clearRightWindow(){
-    const ulElement = document.getElementById("rightWindow"); 
-               
+    const ulElement = document.getElementById("rightWindow");
+
             while (ulElement.firstChild) {
                 ulElement.removeChild(ulElement.firstChild);
             }
@@ -279,7 +279,7 @@ function handleClickLeftBlocks(){
     songs = filterData("artiste",datasetAfter3Select, this.innerText)[0].songs;
     loadRightWindow(songs)
     console.log(songs)
-    
+
 }
 
 function handleClickRightBlocks(){
@@ -300,14 +300,14 @@ function handleClickRightBlocks(){
             info.appendChild(newElement1)
             info.appendChild(newElement2)
             info.appendChild(newElement3)
-            
+
         }
     })
 }
 
 function clearInfo(){
     const Element = document.getElementsByClassName("infoMusique")[0];
-               
+
         while (Element.firstChild) {
             Element.removeChild(Element.firstChild);
         }
@@ -341,15 +341,15 @@ function filterData(str,data,critere){
     switch (str){
         case "pays":
             return data.filter(d => d.artist_country === critere);
-        case "genre": 
+        case "genre":
             return data.filter(d => d.artist_genre === critere);
         case "type":
             console.log("On passe la ")
             return data.filter(d => d.artist_type === critere);
         case "artiste":
-            return data.filter(d => d.artist_name === critere);     
+            return data.filter(d => d.artist_name === critere);
     }
-    
+
 }
 
 
