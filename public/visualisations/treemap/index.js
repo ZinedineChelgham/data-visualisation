@@ -156,7 +156,7 @@ d3.json(DATASET_PATH, function (error, data) {
                 .paddingInner(1);
         }
 
-        //Set the root node and the hierarchy 
+        //Set the root node and the hierarchy
         var root = d3.hierarchy(data)
             .eachBefore(function (d) { d.id = (d.parent ? d.parent.id + "." : "") + d.data.name; })
             .sum((d) => {

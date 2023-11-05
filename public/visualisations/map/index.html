@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Song Distribution Map: Discover Songs by Language and Country</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+
+  <div class="title-container">
+    <h1>World Song Distribution Map: Discover Songs by Language and Country</h1>
+  </div>
+
+    <select id="language-select">
+      <option value="english">English</option>
+      <option value="french">French</option>
+      <option value = "deutch"> Deutch </option>
+      <option value = "spanish"> Spanish </option>
+      <option value = "kolsch"> Kolsch </option>
+      <option value = "japanese"> Japanese </option>
+      <option value = "finnish"> Finnish </option>
+      <option value = "portuguese"> Portuguese </option>
+      <option value = "italian"> Italian </option>
+      <option value = "danish"> Danish </option>
+    </select>
+    <div id="legend-container" class="legend">
+        <div class="legend-title"></div>
+        <div id="legend"></div>
+    </div>
+    <div id="song-tooltip" class="tooltip draggable-tooltip">
+      <h3 id="tooltip-header">Songs:</h3>
+      <ul id="tooltip-song-list" class="scrollable-list"></ul>
+      <div id="close-button" class="close-icon">
+        <i class="fas fa-times"></i>
+        <div class="back-button" >
+          <i class="fas fa-arrow-left"></i>
+        </div>
+    </div>
+    </div>
+
+    <div id="color_box_wrapper"><div id="color_box" class="grey"></div><p id="color_text">&nbsp;&nbsp;No data</p></div>
+    <div id="map-container" class="responsive-svg" >
+  </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
