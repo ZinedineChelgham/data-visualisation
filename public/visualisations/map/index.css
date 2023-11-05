@@ -3,21 +3,25 @@ https://www.w3schools.com/howto/howto_css_tooltip.asp
 */
 
 /* Title */
+
+body {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 180vh;
+}
+
 h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 20px;
     font-weight: bold;
-    text-align: left;
+    text-align: left; 
     margin-bottom: 10px;
-  }
-
-body{
-    background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 128vh;
+    margin-left: 10px; 
 }
-
 
 /* language select dropdown */
 #language-select {
@@ -25,13 +29,13 @@ body{
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: rgb(253, 249, 244);
+    background-color: rgb(249, 204, 240);
     color: #C850C0;
     cursor: pointer;
     position: relative;
     top: 20px;
+    left:10px;
     font-weight: bold;
-
 }
 #language-select::after {
     content: '\25BC';
@@ -54,6 +58,10 @@ body{
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     display: none;
+    opacity: 1.0;
+    top: 230px;
+    right: 50px;
+    z-index: 1;
 }
 .draggable-tooltip {
     cursor: grab;
@@ -115,7 +123,7 @@ body{
 }
 .scrollable-list li:last-child {
     border-bottom: none;
-        max-height: 200px;
+    max-height: 200px;
     overflow-y: auto;
 }
 /* songs name text part */
@@ -124,16 +132,15 @@ body{
     font-weight: bold;
 }
 
-
-
 /* Legend */
 .legend {
     position: absolute;
-    top: 600px;
+    top: 230px;
     left: 10px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(249, 204, 240);
     padding: 8px;
     border: 1px solid #ccc;
+    border-radius: 10px;
 }
 .legend-title {
     font-weight: bold;
@@ -147,12 +154,13 @@ body{
     justify-content: flex-start;
     align-items: center;
     position: absolute;
-    top: 560px;
+    top: 200px;
     left: 10px;
-    background-color: #ffffff;
+    background-color: rgb(249, 204, 240);
     border-radius: 10px;
     padding: 2px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 0;
 }
 #color_box, #color_text {
     display: inline-block;
@@ -179,5 +187,7 @@ body{
     width: 100%;
     height: 100vh;
     pointer-events: zoom;
+    top: -100px;
+
 }
 
