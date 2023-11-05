@@ -133,7 +133,7 @@ d3.json(DATASET_PATH, function (error, data) {
                 .style("margin.right", -margin.right + "px")
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-                .style("shape-rendering", "crispEdges")
+                .style("shape-rendering", "crispEdges") // remove blur
 
             grandparent = svg.append("g")
                 .attr("class", "grandparent");
@@ -168,9 +168,11 @@ d3.json(DATASET_PATH, function (error, data) {
                 return b.height - a.height || b.value - a.value;
             });
 
+        console.log("before", root);
 
         initialize(root);
         accumulate(root);
+        console.log("after", root);
         layout(root);
         treemap(root);
         display(root);
