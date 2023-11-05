@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="index.js" defer></script>
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <style>
+        /* Réinitialisez les marges par défaut du corps et supprimez le remplissage */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f0f0f0; /* Remplacez cette couleur par la couleur de fond souhaitée */
+        }
+
+        /* Affectez la largeur et la hauteur à 100% pour la balise body et le HTML */
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        li:hover{
+            background-color: white;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none; 
+        }
+
+        div.tooltip {
+                position: absolute;
+                text-align: center;
+                width: 100px;
+                height: fit-content;
+                padding: 8px;
+                font: 10px sans-serif;
+                background: #ffff99;
+                border: solid 1px #aaa;
+                border-radius: 8px;
+                pointer-events: none;
+                cursor: grab;
+            }
+
+
+            .breadcrumb {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                
+            }
+            
+
+            .step {
+                background-color: #e2e2e2;
+                padding: 5px 10px;
+                cursor: grab;
+                margin-bottom: 10px;
+                border: 2px solid black;                
+            }
+
+            .step:hover {
+                color: darkblue;
+                background-color: white;
+            }
+
+            .selected {
+                color: darkblue;
+            }
+
+            #validateButton {
+                margin-top: 10px;
+                cursor: pointer;
+            }
+
+            #returnButton {
+                margin-top: 10px;
+                cursor: pointer;
+                display: none;
+            }
+
+            .blocks{
+                display: none;
+                position: absolute;
+                width: 80%;
+                height: 90%;
+                margin: 0 auto;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                flex-direction: row;
+                
+            }
+
+            .leftBlock {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                background-color: gray;
+                overflow: scroll;
+                justify-content: space-around;
+            }
+
+            .rightBlock {
+                background-color: gray;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                overflow: scroll;
+                justify-content: space-around;
+            }
+
+            .infoMusique {
+                display: none;
+                background-color: gainsboro;
+                z-index: 1000;
+                position: absolute;
+                width: 40%;
+                height: 50%;
+                margin: 0 auto;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                align-content: center;
+                flex-direction: column;
+                justify-content: space-around;
+            }
+
+            .control {
+                flex-direction: column;
+                margin-top : 25px;
+                margin-left: 25px;
+                display: flex;
+            }
+            
+            .tableName{
+                background-color: cadetblue;
+            }
+
+            .block{
+                width: 40%;
+                height: 100%;
+                display: flex;
+                background-color: gainsboro;
+                flex-direction: column;
+                align-items: center;
+                margin-right: 40px;
+                
+            }
+            .title{
+                background-color: grey;
+                width: fit-content;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                padding: 7px;
+            }
+
+            .close{
+                background-color: aqua;
+            }
+            
+            .controlInfoMusique{
+                display: flex;
+            }
+
+
+
+    </style>
+    
+</head>
+<body>
+    <div class="control" style="position: absolute;">
+        <div id="breadcrumb" class="breadcrumb">Répartition des <br>artistes par:
+            <a class="step" data-order="1" draggable="true">Pays</a>
+            <a class="step" data-order="2" draggable="true">Genre</a>
+            <a class="step" data-order="3" draggable="true">Type</a>
+        </div>
+        <button id="validateButton">Valider</button>       
+        <button id="returnButton">Retour</button>   
+    </div>
+    
+    <div id="my_dataviz"></div>
+    <div class="title">
+        <div>
+            Répartition des artistes par:
+            <div id="indicateur"></div>
+        </div>
+        <br>
+        <div>
+            Filtre actuel:
+            <div id="filtre"></div>
+        </div>
+    </div>
+
+    <div class="blocks">
+        <div class="block">
+            <div classe="tableName">Artiste</div>
+            <div class="leftBlock">
+                <ul id="leftWindow"></ul>
+            </div>
+        </div>
+        <div class="block">
+            <div classe="tableName">Musique</div>
+            <div class="rightBlock">
+                <ul id="rightWindow"></ul>
+            </div>
+        </div>
+        
+    </div>
+    <div class="controlInfoMusique">
+        <div class="infoMusique"></div>
+        <!--<button class="close">Fermer</button> -->
+    </div> 
+
+    
+</body>
+</html>
