@@ -15,7 +15,9 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #f0f0f0; /* Remplacez cette couleur par la couleur de fond souhaitée */
+            background-color: #4158D0;
+            background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         /* Affectez la largeur et la hauteur à 100% pour la balise body et le HTML */
@@ -30,7 +32,7 @@
         }
 
         ul {
-            list-style: none; 
+            list-style: none;
         }
 
         div.tooltip {
@@ -52,16 +54,16 @@
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
-                
+
             }
-            
+
 
             .step {
                 background-color: #e2e2e2;
                 padding: 5px 10px;
                 cursor: grab;
                 margin-bottom: 10px;
-                border: 2px solid black;                
+                border: 2px solid black;
             }
 
             .step:hover {
@@ -94,20 +96,20 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 flex-direction: row;
-                
+
             }
 
             .leftBlock {
                 width: 100%;
                 height: 100%;
                 display: flex;
-                background-color: gray;
+                background-color: #c5c1c1;
                 overflow: scroll;
                 justify-content: space-around;
             }
 
             .rightBlock {
-                background-color: gray;
+                background-color: #c5c1c1;
                 width: 100%;
                 height: 100%;
                 display: flex;
@@ -140,7 +142,7 @@
                 margin-left: 25px;
                 display: flex;
             }
-            
+
             .tableName{
                 background-color: cadetblue;
             }
@@ -153,21 +155,22 @@
                 flex-direction: column;
                 align-items: center;
                 margin-right: 40px;
-                
+
             }
             .title{
-                background-color: grey;
+                background-color: #c2a0a0;
                 width: fit-content;
                 position: absolute;
                 top: 10px;
                 right: 10px;
                 padding: 7px;
+                opacity: 0.8;
             }
 
             .close{
                 background-color: aqua;
             }
-            
+
             .controlInfoMusique{
                 display: flex;
             }
@@ -175,7 +178,7 @@
 
 
     </style>
-    
+
 </head>
 <body>
     <div class="control" style="position: absolute;">
@@ -184,10 +187,10 @@
             <a class="step" data-order="2" draggable="true">Genre</a>
             <a class="step" data-order="3" draggable="true">Type</a>
         </div>
-        <button id="validateButton">Valider</button>       
-        <button id="returnButton">Retour</button>   
+        <button id="validateButton">Valider</button>
+        <button id="returnButton">Retour</button>
     </div>
-    
+
     <div id="my_dataviz"></div>
     <div class="title">
         <div>
@@ -214,13 +217,13 @@
                 <ul id="rightWindow"></ul>
             </div>
         </div>
-        
+
     </div>
     <div class="controlInfoMusique">
         <div class="infoMusique"></div>
         <!--<button class="close">Fermer</button> -->
-    </div> 
+    </div>
 
-    
+
 </body>
 </html>
